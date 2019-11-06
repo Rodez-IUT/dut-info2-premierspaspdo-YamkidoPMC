@@ -26,8 +26,14 @@
 			}catch(PDOException$e){
 				throw new PDOException($e->getMessage(),(int)$e->getCode());
 			}
-			$stmt = $pdo->query('SELECT * FROM users ORDER BY username');
+			$stmt = $pdo->query('SELECT * FROM users WHERE status_id="2" AND username LIKE \'e%\' ORDER BY username');
 			echo "<table border=\"1px\">";
+			echo "<tr>";
+				echo "<td>Id</td>";
+				echo "<td>Username</td>";
+				echo "<td>Email</td>";
+				echo "<td>Status</td>";
+				echo "</tr>";
 			while($row = $stmt->fetch()){
 				echo "<tr>";
 				echo "<td>".$row['id']."</td>";

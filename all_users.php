@@ -26,8 +26,9 @@
 			}catch(PDOException$e){
 				throw new PDOException($e->getMessage(),(int)$e->getCode());
 			}
-			$stmt = $pdo->query('SELECT * FROM users WHERE status_id="2" AND username LIKE \'e%\' ORDER BY username');
-			echo "<table border=\"1px\">";
+			//$stmt = $pdo->query('SELECT * FROM users WHERE status_id="2" AND username LIKE \'e%\' ORDER BY username');
+			$stmt = $pdo->query('SELECT users.id,username,email,status.name FROM users JOIN status ON users.status_id = status.id ORDER BY username');
+			echo "<table border-bottom=\"1px\">";
 			echo "<tr>";
 				echo "<td>Id</td>";
 				echo "<td>Username</td>";
@@ -39,7 +40,7 @@
 				echo "<td>".$row['id']."</td>";
 				echo "<td>".$row['username']."</td>";
 				echo "<td>".$row['email']."</td>";
-				echo "<td>".$row['status_id']."</td>";
+				echo "<td>".$row['name']."</td>";
 				echo "</tr>";
 			}
 			echo "</table>";

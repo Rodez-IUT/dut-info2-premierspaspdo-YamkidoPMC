@@ -28,8 +28,25 @@
 			}
 			//$stmt = $pdo->query('SELECT * FROM users WHERE status_id="2" AND username LIKE \'e%\' ORDER BY username');
 			/*$stmt = $pdo->query("SELECT users.id,username,email,status.name FROM users JOIN status ON users.status_id = status.id ORDER BY username");*/
-			$lettre = 'e';
-			$statusVoulu = 2;
+			
+			echo "<form method=\"post\">";
+			echo "<input type=\"text\" id=\"lettre\" name=\"lettreV\"></input>";
+			echo "<select id=\"status\" name=\"statusV\">";
+			echo "<option value=\"1\">Waiting for account validation</option>";
+			echo "<option value=\"2\">Active Account</option>";
+			echo "</select>";
+			echo "<input type=\"submit\" id=\"bouton\" name=\"Chercher\"></input>";
+			echo "</form>";
+			
+			if (isset($_POST['lettreV']) && $_POST('lettreV') != "") {
+				$lettre = $_POST['lettreV'];
+				$statusVoulu = $_POST['statusV'];
+				
+			} else {
+				//Pas tester
+				$lettre = '%';
+				$statusVoulu = '%';
+			}
 			$stmt = $pdo->query("SELECT users.id,username,email,status.name 
 								 FROM users 
 								 JOIN status 
@@ -38,7 +55,8 @@
 								 AND username 
 								 LIKE '$lettre%' 
 								 ORDER BY username");
-			echo "<table border-bottom=\"1px\">";
+			
+			echo "<table border=\"1px\">";
 			echo "<tr>";
 				echo "<td>Id</td>";
 				echo "<td>Username</td>";

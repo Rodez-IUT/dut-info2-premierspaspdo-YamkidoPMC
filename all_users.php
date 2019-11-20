@@ -34,20 +34,15 @@
 			echo "<select id=\"status\" name=\"statusV\">";
 			echo "<option value=\"1\">Waiting for account validation</option>";
 			echo "<option value=\"2\">Active Account</option>";
+			echo "<option value=\"3\">Waiting for account deletion</option>";
 			echo "</select>";
 			echo "<input type=\"submit\" id=\"bouton\" name=\"Chercher\"></input>";
 			echo "</form>";
 			
-			if (isset($_POST['lettreV']) && $_POST('lettreV') != "") {
+			if (isset($_POST['lettreV']) && $_POST['lettreV'] != "") {
 				$lettre = $_POST['lettreV'];
 				$statusVoulu = $_POST['statusV'];
-				
-			} else {
-				//Pas tester
-				$lettre = '%';
-				$statusVoulu = '%';
-			}
-			$stmt = $pdo->query("SELECT users.id,username,email,status.name 
+				$stmt = $pdo->query("SELECT users.id,username,email,status.name 
 								 FROM users 
 								 JOIN status 
 								 ON users.status_id = status.id 
@@ -55,6 +50,15 @@
 								 AND username 
 								 LIKE '$lettre%' 
 								 ORDER BY username");
+				
+			} else {
+				$stmt = $pdo->query("SELECT users.id,username,email,status.name 
+								 FROM users 
+								 JOIN status 
+								 ON users.status_id = status.id 
+								 ORDER BY username");
+			}
+			
 			
 			echo "<table border=\"1px\">";
 			echo "<tr>";

@@ -39,17 +39,24 @@
 			echo "<input type=\"submit\" id=\"bouton\" name=\"Chercher\"></input>";
 			echo "</form>";
 			
-			if (isset($_POST['lettreV']) && $_POST['lettreV'] != "") {
-				$lettre = $_POST['lettreV'];
+			if (isset($_POST['statusV'])) {
+				if(isset($_POST['lettreV']) && $_POST['lettreV'] != "") {
+					$lettre = $_POST['lettreV'];
+				} else {
+					$lettre = "";
+				}
 				$statusVoulu = $_POST['statusV'];
-				$stmt = $pdo->query("SELECT users.id,username,email,status.name 
+				$stmt = $pdo->prepare("SELECT users.id,username,email,status.name 
 								 FROM users 
 								 JOIN status 
 								 ON users.status_id = status.id 
-								 WHERE status.id = $statusVoulu 
+								 WHERE status.id = :statusVoulu 
 								 AND username 
-								 LIKE '$lettre%' 
+								 LIKE :lettre
 								 ORDER BY username");
+				$stmt->bindValue(':statusVoulu', $statusVoulu, PDO::PARAM_INT);
+				$stmt->bindValue(':lettre', $lettre.'%', PDO::PARAM_STR);
+				$stmt->execute();
 				
 			} else {
 				$stmt = $pdo->query("SELECT users.id,username,email,status.name 

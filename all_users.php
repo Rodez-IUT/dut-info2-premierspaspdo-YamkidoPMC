@@ -73,6 +73,7 @@
 				echo "<td>Username</td>";
 				echo "<td>Email</td>";
 				echo "<td>Status</td>";
+				echo "<td></td>";
 				echo "</tr>";
 			while($row = $stmt->fetch()){
 				echo "<tr>";
@@ -80,6 +81,10 @@
 				echo "<td>".$row['username']."</td>";
 				echo "<td>".$row['email']."</td>";
 				echo "<td>".$row['name']."</td>";
+				if ($row['status_id'] != 3) {
+					form pour lurl method get action demande
+					url vers page
+				}
 				echo "</tr>";
 			}
 			echo "</table>";

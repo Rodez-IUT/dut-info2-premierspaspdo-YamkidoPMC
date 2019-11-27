@@ -46,7 +46,7 @@
 					$lettre = "";
 				}
 				$statusVoulu = $_POST['statusV'];
-				$stmt = $pdo->prepare("SELECT users.id,username,email,status.name 
+				$stmt = $pdo->prepare("SELECT users.id,username,email,status.name,status_id 
 								 FROM users 
 								 JOIN status 
 								 ON users.status_id = status.id 
@@ -59,7 +59,7 @@
 				$stmt->execute();
 				
 			} else {
-				$stmt = $pdo->query("SELECT users.id,username,email,status.name 
+				$stmt = $pdo->query("SELECT users.id,username,email,status.name ,status_id 
 								 FROM users 
 								 JOIN status 
 								 ON users.status_id = status.id 
@@ -82,8 +82,11 @@
 				echo "<td>".$row['email']."</td>";
 				echo "<td>".$row['name']."</td>";
 				if ($row['status_id'] != 3) {
-					form pour lurl method get action demande
-					url vers page
+					echo "<td>";
+					echo "<form method=\"get\" action=\"askDeletion\">";
+					echo "<a href=\"all_users.php?status_id=3&user_id=".$row['id']."\">Ask Deletion</a>";
+					echo "</form>";
+					echo "</td>";
 				}
 				echo "</tr>";
 			}

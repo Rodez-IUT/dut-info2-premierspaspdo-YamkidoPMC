@@ -28,6 +28,15 @@
 			}
 			//$stmt = $pdo->query('SELECT * FROM users WHERE status_id="2" AND username LIKE \'e%\' ORDER BY username');
 			/*$stmt = $pdo->query("SELECT users.id,username,email,status.name FROM users JOIN status ON users.status_id = status.id ORDER BY username");*/
+
+			if (isset($_GET['action'])) {
+				//$date = new DateTime();
+				//$date->format('Y-m-d H:i:s');
+				$stmt = $pdo->prepare("INSERT INTO action_log (action_name,user_id) VALUES (':action',':userid')");
+				$stmt->bindValue(':action', $_GET['action'], PDO::PARAM_STR);
+				$stmt->bindValue(':userid', (int)$_GET['user_id'], PDO::PARAM_INT);
+				$stmt->execute();
+			}
 			
 			echo "<form method=\"post\">";
 			echo "<input type=\"text\" id=\"lettre\" name=\"lettreV\"></input>";
@@ -84,7 +93,7 @@
 				if ($row['status_id'] != 3) {
 					echo "<td>";
 					echo "<form method=\"get\" action=\"askDeletion\">";
-					echo "<a href=\"all_users.php?status_id=3&user_id=".$row['id']."\">Ask Deletion</a>";
+					echo "<a href=\"all_users.php?action=askDeletion&status_id=3&user_id=".$row['id']."\">Ask Deletion</a>";
 					echo "</form>";
 					echo "</td>";
 				}
